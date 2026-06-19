@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Embara Centre · Phase 1</title>
+  <style>
+    /* ─── Reset & Base ─── */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f6f2e8;
+      font-family: 'Segoe UI', 'Roboto', system-ui, sans-serif;
+      padding: 2rem 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: #1e2a1e;
+    }
+
+    .card {
+      max-width: 880px;
+      width: 100%;
+      background: #fefcf7;
+      border-radius: 2.5rem;
+      box-shadow: 0 30px 50px rgba(0,0,0,0.08), 0 0 0 1px #e2d9c8;
+      padding: 2.5rem 2.8rem;
+      transition: all 0.2s;
+    }
+
+    @media (max-width: 640px) {
+      .card { padding: 1.8rem 1.2rem; }
+    }
+
+    /* ─── Header ─── */
+    .header {
+      text-align: center;
+      border-bottom: 2px solid #e4dccc;
+      padding-bottom: 1.5rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .header .badge {
+      display: inline-block;
+      background: #2d5a2a;
+      color: #f9f7ed;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      padding: 0.25rem 1.2rem;
+      border-radius: 40px;
+      text-transform: lowercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .header h1 {
+      font-size: 2.8rem;
+      font-weight: 600;
+      color: #1f3a1c;
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+
+    .header h1 span {
+      color: #b27a3a;
+    }
+
+    .header .sub {
+      font-size: 1.2rem;
+      color: #5b4f3a;
+      margin-top: 0.2rem;
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+
+    /* Target + Timeline row */
+    .info-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem 3rem;
+      margin: 1.5rem 0 0.5rem 0;
+      padding: 0.8rem 0;
+      border-top: 1px dashed #d5ccb4;
+      border-bottom: 1px dashed #d5ccb4;
+    }
+
+    .info-row .item {
+      text-align: center;
+    }
+
+    .info-row .item .number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #1f3a1c;
+      letter-spacing: -0.5px;
+    }
+
+    .info-row .item .label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #7a6f4b;
+      font-weight: 500;
+    }
+
+    .info-row .timeline {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .info-row .timeline .step {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #2d4f2a;
+    }
+
+    .info-row .timeline .step .dot {
+      width: 8px;
+      height: 8px;
+      background: #b27a3a;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .info-row .timeline .step .month {
+      font-weight: 700;
+      color: #1f3a1c;
+    }
+
+    /* ─── Section Titles ─── */
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #1f3a1c;
+      margin: 2rem 0 0.8rem 0;
+      letter-spacing: -0.3px;
+      border-left: 5px solid #b27a3a;
+      padding-left: 0.8rem;
+    }
+
+    p {
+      line-height: 1.7;
+      color: #2f3328;
+      margin-bottom: 0.8rem;
+      font-size: 1rem;
+    }
+
+    .highlight {
+      background: #f5f0e2;
+      padding: 0.1rem 0.4rem;
+      border-radius: 6px;
+      font-weight: 500;
+      color: #1f3a1c;
+    }
+
+    /* ─── Grid / Lists ─── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem 1.8rem;
+      background: #f9f6ed;
+      padding: 1.2rem 1.5rem;
+      border-radius: 1.2rem;
+      margin: 0.8rem 0 1.2rem 0;
+      border: 1px solid #e6ddd0;
+    }
+
+    .two-col .zone {
+      display: flex;
+      align-items: baseline;
+      gap: 0.4rem;
+    }
+
+    .two-col .zone .name {
+      font-weight: 600;
+      color: #1f3a1c;
+      min-width: 100px;
+    }
+
+    .two-col .zone .desc {
+      color: #4b4f3a;
+      font-size: 0.9rem;
+    }
+
+    /* ─── Budget Table ─── */
+    .budget-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fcfaf4;
+      border-radius: 1.2rem;
+      overflow: hidden;
+      border: 1px solid #e6ddd0;
+      margin: 0.8rem 0 1.2rem 0;
+      font-size: 0.95rem;
+    }
+
+    .budget-table tr {
+      border-bottom: 1px solid #ece5d8;
+    }
+
+    .budget-table tr:last-child {
+      border-bottom: none;
+    }
+
+    .budget-table td {
+      padding: 0.7rem 1rem;
+      vertical-align: middle;
+    }
+
+    .budget-table .cat {
+      font-weight: 600;
+      color: #1f3a1c;
+      width: 45%;
+    }
+
+    .budget-table .sub {
+      font-size: 0.85rem;
+      color: #5b5f42;
+      display: block;
+      font-weight: 400;
+      margin-top: 0.1rem;
+    }
+
+    .budget-table .amt {
+      text-align: right;
+      font-weight: 600;
+      color: #1f3a1c;
+      width: 25%;
+    }
+
+    .budget-table .total-row {
+      background: #e4ddd0;
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    .budget-table .total-row td {
+      padding: 0.8rem 1rem;
+      color: #1f2a1a;
+    }
+
+    .budget-table .total-row .amt {
+      font-size: 1.2rem;
+      color: #1f3a1c;
+    }
+
+    .highlight-extra {
+      background: #f3efe0;
+    }
+
+    .highlight-extra td {
+      background: #f3efe0;
+    }
+
+    /* ─── Tiers ─── */
+    .tier-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem 1.8rem;
+      background: #f9f6ed;
+      padding: 1.5rem;
+      border-radius: 1.2rem;
+      border: 1px solid #e6ddd0;
+      margin: 0.8rem 0 1.2rem 0;
+    }
+
+    .tier-grid .tier {
+      display: flex;
+      flex-direction: column;
+      background: #fefcf7;
+      padding: 0.8rem 1.2rem;
+      border-radius: 1rem;
+      border-left: 6px solid #b27a3a;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+    }
+
+    .tier-grid .tier .tier-name {
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: #1f3a1c;
+      letter-spacing: -0.3px;
+    }
+
+    .tier-grid .tier .tier-amount {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #b27a3a;
+      margin: 0.1rem 0 0.1rem 0;
+    }
+
+    .tier-grid .tier .tier-desc {
+      font-size: 0.9rem;
+      color: #4b4f3a;
+      line-height: 1.4;
+    }
+
+    .tier-grid .tier-wide {
+      grid-column: 1 / -1;
+    }
+
+    @media (max-width: 600px) {
+      .tier-grid { grid-template-columns: 1fr; }
+      .tier-grid .tier-wide { grid-column: 1; }
+    }
+
+    /* ─── CTA (How to Contribute) ─── */
+    .cta-box {
+      background: #f0ede0;
+      border-radius: 1.5rem;
+      padding: 1.8rem 2rem;
+      margin: 2rem 0 1.2rem 0;
+      border-left: 6px solid #b27a3a;
+      text-align: center;
+    }
+
+    .cta-box h3 {
+      margin-top: 0;
+      color: #1f3a1c;
+      font-size: 1.2rem;
+    }
+
+    .qr-section {
+      margin: 1.2rem 0;
+      text-align: center;
+    }
+
+    .qr-section img {
+      max-width: 220px;
+      height: auto;
+      border: 1px solid #d5ccb4;
+      border-radius: 1rem;
+      padding: 0.5rem;
+      background: #ffffff;
+      display: inline-block;
+    }
+
+    .qr-section .qr-note {
+      margin-top: 0.8rem;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #b27a3a;
+    }
+
+    .qr-section .qr-note strong {
+      color: #1f3a1c;
+    }
+
+    /* ─── Footer ─── */
+    .footer {
+      text-align: center;
+      margin-top: 2.2rem;
+      padding-top: 1.5rem;
+      border-top: 2px solid #ece5d8;
+      font-size: 0.9rem;
+      color: #5b5f42;
+    }
+
+    .footer .closing {
+      font-style: italic;
+      color: #4f5a3a;
+      font-size: 1rem;
+      max-width: 500px;
+      margin: 0 auto 0.4rem auto;
+    }
+
+    .footer .small {
+      font-size: 0.75rem;
+      color: #8a7f5a;
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 600px) {
+      .header h1 { font-size: 2rem; }
+      .two-col { grid-template-columns: 1fr; }
+      .info-row { gap: 1rem; }
+      .info-row .item .number { font-size: 1.6rem; }
+      .info-row .timeline { gap: 0.8rem; }
+      .budget-table td { padding: 0.5rem 0.6rem; font-size: 0.85rem; }
+      .cta-box { padding: 1.2rem; }
+      .qr-section img { max-width: 160px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- ═══ HEADER ═══ -->
+  <div class="header">
+    <div class="badge">building our sacred space</div>
+    <h1>Embara Centre</h1>
+    <div class="sub">phase 1 – west wing</div>
+
+    <div class="info-row">
+      <div class="item">
+        <div class="number">RM60,000</div>
+        <div class="label">Target</div>
+      </div>
+      <div class="timeline">
+        <span class="step"><span class="dot"></span> <span class="month">June</span> · Fundraising</span>
+        <span class="step"><span class="dot"></span> <span class="month">July</span> · Renovation</span>
+        <span class="step"><span class="dot"></span> <span class="month">August</span> · Launching</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ THE ASK ═══ -->
+  <h2>📌 The Ask</h2>
+  <p>
+    We are raising <span class="highlight">RM60,000</span> to activate the <strong>West Wing</strong> of Embara Centre
+    — a dedicated space for community gatherings, learning, and spiritual growth.
+  </p>
+  <p>
+    <strong>Phase 1 (West Wing) includes:</strong>
+  </p>
+  <div class="two-col">
+    <div class="zone"><span class="name">Reception</span><span class="desc">Welcoming guests &amp; enquiries</span></div>
+    <div class="zone"><span class="name">Pantry</span><span class="desc">Refreshments &amp; light meals</span></div>
+    <div class="zone"><span class="name">Toilets</span><span class="desc">Clean &amp; accessible washrooms</span></div>
+    <div class="zone"><span class="name">Conference Room</span><span class="desc">Meetings &amp; consultations</span></div>
+    <div class="zone"><span class="name">Classroom</span><span class="desc">Workshops &amp; children's activities</span></div>
+    <div class="zone"><span class="name">Main Hall</span><span class="desc">Gatherings, events &amp; prayers</span></div>
+    <div class="zone" style="grid-column: 1 / -1;"><span class="name">AV Room</span><span class="desc">Media production &amp; recording</span></div>
+  </div>
+
+  <!-- ═══ BUDGET ═══ -->
+  <h2>💰 Where Your Money Goes</h2>
+
+  <table class="budget-table">
+    <tr>
+      <td class="cat">Rental &amp; Utilities <span class="sub">2 years · RM1/mo rent + water, electric, internet, parking</span></td>
+      <td class="amt">RM26,400</td>
+    </tr>
+    <tr>
+      <td class="cat">Electrical &amp; Plumbing <span class="sub">Lights, switches, sink, pipes + installation</span></td>
+      <td class="amt">RM6,500</td>
+    </tr>
+    <tr>
+      <td class="cat">Minor Renovation &amp; Cleaning <span class="sub">Steam wash, repaint, deep clean, nets, plastering, waste removal</span></td>
+      <td class="amt">RM5,500</td>
+    </tr>
+    <tr>
+      <td class="cat">Furniture &amp; Appliances <span class="sub">ACs, fridge, microwave, dispenser, coffee machine, sofas, tables, racks, movers</span></td>
+      <td class="amt">RM18,750</td>
+    </tr>
+    <tr class="highlight-extra">
+      <td class="cat">🆕 Children's Corner <span class="sub">Furniture, playsets, stationery &amp; activity books</span></td>
+      <td class="amt">RM2,000</td>
+    </tr>
+    <tr>
+      <td class="cat">Insurance &amp; Contingency <span class="sub">Emergency fund &amp; coverage</span></td>
+      <td class="amt">RM850</td>
+    </tr>
+    <tr class="total-row">
+      <td>🔹 <strong>Grand Total</strong></td>
+      <td class="amt"><strong>RM60,000</strong></td>
+    </tr>
+  </table>
+
+  <!-- ═══ TIERS ═══ -->
+  <h2>🤲 Contribution Tiers</h2>
+  <p style="margin-bottom:0.5rem; font-size:0.95rem; color:#5b5f42;">
+    Choose a block that speaks to you. Every ringgit brings us closer to opening our doors.
+  </p>
+
+  <div class="tier-grid">
+    <!-- FIREWATER -->
+    <div class="tier">
+      <div class="tier-name">🔥💧 FIREWATER</div>
+      <div class="tier-amount">RM1,100 per block</div>
+      <div class="tier-desc">Covers one full month of utilities for the West Wing — water, electricity, internet, parking &amp; building maintenance.</div>
+    </div>
+
+    <!-- EARTH -->
+    <div class="tier">
+      <div class="tier-name">🌍 EARTH</div>
+      <div class="tier-amount">RM2,000 per block</div>
+      <div class="tier-desc">Funds a furniture block — for example, the Children's Corner, a set of sofas, office tables, or storage cabinets.</div>
+    </div>
+
+    <!-- WIND -->
+    <div class="tier tier-wide">
+      <div class="tier-name">💨 WIND</div>
+      <div class="tier-amount">RM6,000</div>
+      <div class="tier-desc">Covers <strong>all</strong> air conditioning units for the West Wing (1HP, 1.5HP &amp; 2HP) — keeping the space cool and comfortable year‑round.</div>
+    </div>
+
+    <!-- ETHER (replaces Any Amount) -->
+    <div class="tier tier-wide" style="border-left-color: #8a7f5a; background: #f8f5ed;">
+      <div class="tier-name">🌱 ETHER</div>
+      <div class="tier-amount">Freely given</div>
+      <div class="tier-desc">Contribute whatever moves you — every gift, large or small, flows directly into building our shared space.</div>
+    </div>
+  </div>
+
+  <!-- ═══ HOW TO CONTRIBUTE (CLEAN) ═══ -->
+  <div class="cta-box">
+    <h3>📬 How to Contribute</h3>
+    <div class="qr-section">
+      <p style="font-size:0.95rem; color:#4b4f3a; margin-bottom:0.8rem;">
+        Scan the QR code below to donate via DuitNow.
+      </p>
+      <!-- Using the main branch raw URL -->
+      <img src="https://raw.githubusercontent.com/gentlewolves/embara-farm-pics/main/farm-photos/embara-qr.jpeg.jpeg" alt="Embara Centre DuitNow QR Code" />
+      <p class="qr-note">📌 Please mention <strong>"EC"</strong> in your transfer reference.</p>
+    </div>
+  </div>
+
+  <!-- ═══ CLOSING ═══ -->
+  <div class="footer">
+    <div class="closing">
+      With gratitude, Embara Centre. Your generosity builds spaces where community grows.
+    </div>
+    <div class="small" style="margin-top:0.8rem;">
+      Embara Centre · West Wing Phase 1 · 19–30 June 2026
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
